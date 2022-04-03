@@ -1,0 +1,16 @@
+[package]
+name = "fallacy-box"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.57"
+authors = ["David Li <davidli2010@foxmail.com>"]
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+description = "A library for fallible Box."
+keywords = ["fallible", "alloc", "Box"]
+repository = "https://github.com/fallacy-rs/fallacy-box.git"
+homepage = "https://github.com/fallacy-rs/fallacy-box"
+documentation = "https://docs.rs/fallacy-box/"
+
+[dependencies]
+fallacy-clone = "0.1.1"
