@@ -14,3 +14,4 @@ documentation = "https://docs.rs/fallacy-box/"
 
 [dependencies]
 fallacy-clone = "0.1.1"
+serde = { version = "1.0.136", optional = true }

@@ -226,3 +226,36 @@ impl<T: TryClone, A: Allocator + TryClone> TryClone for Box<T, A> {
         self.as_mut().try_clone_from(source)
     }
 }
+
+#[cfg(feature = "serde")]
+mod serde {
+    use crate::Box;
+    use serde::{de::Error, Deserialize, Deserializer, Serialize, Serializer};
+
+    impl<T> Serialize for Box<T>
+    where
+        T: ?Sized + Serialize,
+    {
+        #[inline]
+        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+        {
+            (**self).serialize(serializer)
+        }
+    }
+
+    impl<'de, T> Deserialize<'de> for Box<T>
+    where
+        T: Deserialize<'de>,
+    {
+        #[inline]
+        fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where
+            D: Deserializer<'de>,
+        {
+            let val = Deserialize::deserialize(deserializer)?;
+            Box::try_new(val).map_err(D::Error::custom)
+        }
+    }
+}
